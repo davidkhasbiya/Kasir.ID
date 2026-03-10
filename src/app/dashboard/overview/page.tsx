@@ -1,142 +1,78 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import { Card } from "@/components/ui/card";
-import { ShoppingCart, Package, TrendingUp } from "lucide-react";
-
-// Komponen Counter yang lebih stabil
-const Counter = ({ target, duration = 1500 }: { target: number, duration?: number }) => {
-  const [count, setCount] = useState(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    let startTimestamp: number | null = null;
-    
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      setCount(Math.floor(progress * target));
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-
-    window.requestAnimationFrame(step);
-  }, [target, duration]);
-
-  // Mencegah error hydration dengan memastikan konten hanya muncul di client
-  if (!mounted) return <span>0</span>;
-
-  return <span>{count.toLocaleString()}</span>;
-};
+import { LayoutDashboard, TrendingUp, ShoppingBag, DollarSign, Package } from "lucide-react";
+import { cn } from "@/lib/utils"; // Pastikan utilitas cn ada
 
 export default function OverviewPage() {
+  const stats = [
+    { label: "Total Penjualan", value: "Rp 12.500.000", icon: <DollarSign size={24} className="text-emerald-600" /> },
+    { label: "Pesanan Aktif", value: "14", icon: <ShoppingBag size={24} className="text-blue-600" /> },
+    { label: "Stok Tersedia", value: "852 Kg", icon: <Package size={24} className="text-amber-600" /> },
+    { label: "Tren Harga", value: "+5.2%", icon: <TrendingUp size={24} className="text-red-600" /> },
+  ];
+
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-3xl font-serif font-bold text-stone-950 text-red-600">Dashboard Pengulak</h1>
-        <p className="text-stone-500 text-sm italic">Selamat datang kembali, Mitra Grosir Cabai.</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Card 1 */}
-        <Card className="p-8 border-stone-200 rounded-[2.5rem] bg-white shadow-sm hover:shadow-xl transition-all group">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">Total Pesanan</p>
-              <h2 className="text-5xl font-bold text-stone-900 mt-2">
-                <Counter target={12} />
-              </h2>
-            </div>
-            <div className="p-3 bg-red-50 text-red-600 rounded-2xl group-hover:scale-110 transition-transform">
-              <ShoppingCart size={24} />
-            </div>
-          </div>
-          <p className="text-xs text-stone-400">Bulan ini</p>
-        </Card>
-
-        {/* Card 2 */}
-        <Card className="p-8 border-stone-200 rounded-[2.5rem] bg-white shadow-sm hover:shadow-xl transition-all group">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">Stok Dipantau</p>
-              <h2 className="text-5xl font-bold text-stone-900 mt-2">
-                <Counter target={5} /><span className="text-2xl ml-1 font-medium">Ton</span>
-              </h2>
-            </div>
-            <div className="p-3 bg-green-50 text-green-600 rounded-2xl group-hover:scale-110 transition-transform">
-              <Package size={24} />
-            </div>
-          </div>
-          <p className="text-xs text-stone-400">Dari 3 Daerah</p>
-        </Card>
-
-        {/* Card 3 */}
-        <Card className="p-8 border-stone-200 rounded-[2.5rem] bg-white shadow-sm hover:shadow-xl transition-all group">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400">Pengeluaran</p>
-              <h2 className="text-4xl font-bold text-stone-900 mt-2 leading-tight">
-                Rp <Counter target={120} /> <span className="text-xl">jt</span>
-              </h2>
-            </div>
-            <div className="p-3 bg-stone-100 text-stone-600 rounded-2xl group-hover:scale-110 transition-transform">
-              <TrendingUp size={24} />
-            </div>
-          </div>
-          <p className="text-xs text-stone-400">Estimasi bulanan</p>
-        </Card>
-      </div>
+    <div className="space-y-8 animate-in fade-in duration-500">
       
-      {/* Jangan lupa tambahkan tabel di sini agar tidak kosong di bawahnya */}
-      {/* Tabel Pesanan Terbaru */}
-      <Card className="p-8 border-stone-200 rounded-[2.5rem] bg-white shadow-sm overflow-hidden">
-        <div className="flex justify-between items-center mb-8">
-          <h3 className="font-bold text-xl text-stone-900">Pesanan Terbaru</h3>
-          <button className="text-xs font-bold text-stone-400 hover:text-red-600 border border-stone-200 px-4 py-2 rounded-xl transition-all">
-            Lihat Semua
-          </button>
-        </div>
+      {/* 1. Baris Statistik (KPIs) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, i) => (
+          <Card key={i} className="p-6 border-none shadow-sm hover:shadow-md transition-all rounded-2xl">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-stone-500 text-xs font-bold uppercase tracking-wider">{stat.label}</p>
+                <h3 className="text-xl font-bold text-stone-900 mt-2">{stat.value}</h3>
+              </div>
+              <div className="p-3 bg-stone-100 rounded-xl">{stat.icon}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="text-[10px] uppercase tracking-[0.2em] text-stone-400 border-b border-stone-50">
-                <th className="pb-4 font-bold">ID Pesanan</th>
-                <th className="pb-4 font-bold">Produk</th>
-                <th className="pb-4 font-bold">Tonase</th>
-                <th className="pb-4 font-bold">Asal</th>
-                <th className="pb-4 font-bold text-right">Status</th>
-              </tr>
-            </thead>
-            <tbody className="text-sm">
-              {[
-                { id: "ORD-001", produk: "Rawit Merah", tonase: "500kg", asal: "Kediri", status: "Dikirim" },
-                { id: "ORD-002", produk: "Keriting Merah", tonase: "1 Ton", asal: "Cianjur", status: "Proses" },
-                { id: "ORD-003", produk: "Hijau Besar", tonase: "300kg", asal: "Malang", status: "Selesai" },
-              ].map((order, i) => (
-                <tr key={i} className="group hover:bg-stone-50/50 transition-colors">
-                  <td className="py-5 font-bold text-red-600">{order.id}</td>
-                  <td className="py-5 text-stone-900 font-medium">{order.produk}</td>
-                  <td className="py-5 text-stone-600">{order.tonase}</td>
-                  <td className="py-5 text-stone-500 flex items-center gap-1">
-                    <div className="w-1 h-1 rounded-full bg-stone-300" /> {order.asal}
-                  </td>
-                  <td className="py-5 text-right">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      order.status === 'Dikirim' ? 'bg-green-100 text-green-700' : 
-                      order.status === 'Proses' ? 'bg-amber-100 text-amber-700' : 
-                      'bg-stone-100 text-stone-600'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* 2. Area Utama: Grafik & Ringkasan */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Kolom Kiri: Tabel Riwayat Pesanan */}
+        <Card className="lg:col-span-2 p-6 border-none shadow-sm rounded-2xl">
+          <h2 className="font-bold text-stone-900 mb-6">Riwayat Pesanan Terbaru</h2>
+          <div className="space-y-4">
+            {[1, 2, 3, 4].map((_, i) => (
+              <div key={i} className="flex items-center justify-between p-4 bg-stone-50 rounded-xl hover:bg-red-50 transition-colors">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-red-600 font-bold border border-red-100">#0{i+1}</div>
+                  <div>
+                    <p className="text-sm font-bold text-stone-900">Pesanan Cabai Merah</p>
+                    <p className="text-[11px] text-stone-400">10 Maret 2026</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-stone-900">Rp 450.000</p>
+                  <p className="text-[10px] uppercase font-bold text-green-600">Selesai</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Kolom Kanan: Ringkasan Harga (Market Insight) */}
+        <div className="flex flex-col gap-6">
+            <Card className="p-6 border-none shadow-sm rounded-2xl bg-gradient-to-br from-red-600 to-red-800 text-white">
+                <h2 className="font-bold mb-4 opacity-90">Ringkasan Harga Pasar</h2>
+                <div className="space-y-4 text-sm">
+                    <div className="flex justify-between border-b border-red-700 pb-2"><span>Cabai Merah</span> <span className="font-bold">Rp 32k</span></div>
+                    <div className="flex justify-between border-b border-red-700 pb-2"><span>Cabai Rawit</span> <span className="font-bold">Rp 45k</span></div>
+                    <div className="flex justify-between"><span>Tomat</span> <span className="font-bold">Rp 12k</span></div>
+                </div>
+            </Card>
+
+            {/* Placeholder Grafik */}
+            <Card className="flex-1 p-6 border-none shadow-sm rounded-2xl flex flex-col items-center justify-center text-stone-400 border-2 border-dashed border-stone-200">
+                <LayoutDashboard size={32} className="mb-2 opacity-50" />
+                <p className="text-xs font-medium">Analitik Tren Harga</p>
+            </Card>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

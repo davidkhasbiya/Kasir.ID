@@ -8,6 +8,8 @@ import { ArrowLeft, ShoppingBag, Tractor } from "lucide-react";
 // 1. Import Firebase
 import { auth, googleProvider } from "@/lib/firebase";
 import { signInWithPopup } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -16,14 +18,20 @@ export default function LoginPage() {
     const handleGoogleLogin = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
-            const token = await result.user.getIdToken();
-            document.cookie = `firebase-auth-token=${token}; path=/; max-age=604800`;
-            router.push("/dashboard/overview");
+            const user = result.user;
+            const token = await user.getIdToken();
+
+            // PASTI SUKSES DISINI:
+            document.cookie = `firebase-auth-token=${token}; path=/; max-age=604800; SameSite=Lax;`;
+            console.log("Cookie berhasil diset oleh browser");
+
+            // Ganti router.push dengan cara paksa reload agar middleware baca cookie baru
+            window.location.href = "/dashboard/overview";
         } catch (error) {
             console.error("Login Gagal:", error);
         }
     };
-
+    
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         router.push("/dashboard/overview");
@@ -39,7 +47,7 @@ export default function LoginPage() {
 
             {/* Container Grid Utama - Ini yang membuat mereka sejajar */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl items-stretch">
-                
+
                 {/* KOLOM KIRI: Portal Pembeli */}
                 <Card className="p-8 border-stone-200 shadow-2xl rounded-3xl bg-white flex flex-col justify-between">
                     <div className="space-y-6">
@@ -111,7 +119,7 @@ export default function LoginPage() {
                         <div className="bg-green-50 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-2 text-green-600 group-hover:scale-110 transition-transform">
                             <Tractor size={48} />
                         </div>
-                        
+
                         <div>
                             <h2 className="text-3xl font-serif font-bold text-stone-950">
                                 Portal <span className="text-green-600">Petani</span>

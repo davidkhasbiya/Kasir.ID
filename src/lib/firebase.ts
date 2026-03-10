@@ -1,33 +1,19 @@
-// Import the functions you need from the SDKs you need
-import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// src/lib/firebase.ts
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyAfp6PILJ1WucZ9xDO9eW4DubsIyJWXmN8",
-    authDomain: "marketplace-cabai.firebaseapp.com",
-    projectId: "marketplace-cabai",
-    storageBucket: "marketplace-cabai.firebasestorage.app",
-    messagingSenderId: "388305361214",
-    appId: "1:388305361214:web:4c16611e20eb8f4811f46f",
-    measurementId: "G-PTVH16GSW2"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-/// 1. Inisialisasi Firebase App
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-
-// 2. Inisialisasi Auth
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-
-// 3. Inisialisasi Analytics dengan pengecekan environment
-let analytics = null;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
-}
-
-export { auth, googleProvider, analytics };
+// Inisialisasi Firebase agar tidak error saat hot-reload
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);

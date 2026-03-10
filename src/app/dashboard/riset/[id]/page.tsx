@@ -41,15 +41,30 @@ export default function DetailProdukPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Kolom Kiri: Galeri Foto */}
         <div className="space-y-4">
-          <div className="aspect-square bg-red-500 rounded-[3rem] shadow-2xl shadow-red-100 relative overflow-hidden group">
+          <div className="aspect-square bg-stone-100 rounded-[3rem] shadow-2xl shadow-red-100 relative overflow-hidden group">
+            {/* Penambahan Gambar Utama */}
+            <img
+              src="/images/red-chili.png"
+              alt="Rawit Merah Presto"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+
             <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
             <Badge className="absolute top-6 left-6 bg-white/90 text-red-600 border-none px-4 py-2 rounded-xl font-bold shadow-sm">
               Kualitas Super (Grade A)
             </Badge>
           </div>
+
+          {/* Thumbnail Gambar */}
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="aspect-square bg-stone-100 rounded-2xl border-2 border-transparent hover:border-red-500 cursor:pointer transition-all" />
+              <div key={i} className="aspect-square bg-stone-100 rounded-2xl border-2 border-transparent hover:border-red-500 cursor-pointer transition-all overflow-hidden">
+                <img
+                  src="/images/red-chili.png"
+                  alt={`Thumbnail ${i}`}
+                  className="w-full h-full object-cover opacity-60 hover:opacity-100 transition-opacity"
+                />
+              </div>
             ))}
           </div>
         </div>

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, Search, MessageSquareDiff,
   BarChart3, ClipboardList, User, LogOut, Flame,
-  Menu, X // Tambahkan Menu dan X (untuk ikon tutup)
+  Menu, X, Settings, Moon, Sun
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,7 @@ export function Sidebar({ isMinimized, setIsMinimized }: {
     { name: "Laporan Harga", href: "/dashboard/laporan", icon: <BarChart3 size={20} /> },
     { name: "Riwayat Pesanan", href: "/dashboard/transaksi", icon: <ClipboardList size={20} /> },
     { name: "Profil Mitra", href: "/dashboard/profile", icon: <User size={20} /> },
+    { name: "Pengaturan", href: "/dashboard/settings", icon: <Settings size={20} /> },
   ];
 
   return (
@@ -84,7 +85,15 @@ export function Sidebar({ isMinimized, setIsMinimized }: {
       </nav>
 
       {/* Footer Area - Logout Fix */}
-      <div className="p-4 border-t border-red-900/50">
+      <div className="p-4 border-t border-red-900/50 flex flex-col gap-2">
+        <button
+          onClick={() => { /* logika dark mode */ }}
+          className="flex items-center gap-4 px-4 h-12 text-stone-400 hover:text-white"
+        >
+          <Moon size={20} />
+          {!isMinimized && <span className="text-sm">Dark Mode</span>}
+        </button>
+
         <button
           onClick={() => router.push("/")}
           className={cn(

@@ -24,7 +24,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100 flex items-center justify-between px-8 py-6">
-        <h1 className="text-2xl font-bold font-serif text-red-600">CABAI.ID</h1>
+        <h1 className="text-2xl font-bold font-serif text-red-600">GROSIRCABAI</h1>
         <div className="hidden md:flex gap-8 text-sm font-medium text-stone-600">
           <Link href="/" className="hover:text-red-600">Home</Link>
           <Link href="#about" className="hover:text-red-600">About</Link>
@@ -81,7 +81,7 @@ export default function LandingPage() {
           <div id="about">
             <h4 className="text-xl font-bold mb-4 text-red-500 text-center">Tentang Kami</h4>
             <p className="text-stone-400 text-sm leading-relaxed">
-              CABAI.ID adalah marketplace B2B yang didedikasikan untuk digitalisasi rantai pasok komoditas cabai.
+              GROSIRCABAI adalah marketplace B2B yang didedikasikan untuk digitalisasi rantai pasok komoditas cabai.
               Misi kami adalah menjembatani kesenjangan antara petani lokal dan pelaku bisnis dengan menyediakan platform yang adil, transparan, dan efisien.
             </p>
           </div>
