@@ -3,9 +3,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Hapus bagian eslint karena sudah tidak didukung di file ini pada versi 16
   async headers() {
     return [
       {
