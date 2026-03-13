@@ -1,14 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // Ini kunci agar build tidak error saat ada modul yang butuh browser
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.resolve.alias['firebase/auth'] = false;
-      config.resolve.alias['firebase/firestore'] = false;
-    }
-    return config;
-  },
+  // Turbopack akan mendeteksi ini sebagai konfigurasi kosong dan berhenti mengeluh
+  turbopack: {}, 
+  
   typescript: {
     ignoreBuildErrors: true,
   },
