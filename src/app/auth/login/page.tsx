@@ -69,7 +69,7 @@ export default function LoginPage() {
                             type="button"
                             onClick={handleGoogleLogin}
                             variant="outline"
-                            className="w-full h-12 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-stone-50"
+                            className="w-full h-12 rounded-xl text-stone-800 flex items-center justify-center gap-3 hover:text-stone-400"
                         >
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5" alt="Google" />
                             Masuk dengan Google

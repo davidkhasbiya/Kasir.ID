@@ -66,7 +66,7 @@ export default function LandingPage() {
 
         <div className="flex items-center gap-6">
           <Link href="/auth/login" className="text-sm font-bold text-slate-600 hover:text-red-600 transition-colors">Jadi Mitra</Link>
-          <Button onClick={() => router.push("/auth/login")} className="rounded-full bg-slate-600 px-6 font-bold shadow-xl shadow-slate-200 hover:bg-red-600">Masuk</Button>
+          <Button onClick={() => router.push("/auth/login")} className="rounded-full px-6 font-bold shadow-xl shadow-slate-200 hover:bg-red-600">Masuk</Button>
         </div>
       </nav>
 
