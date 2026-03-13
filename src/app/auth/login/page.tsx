@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,7 +32,7 @@ export default function LoginPage() {
             console.error("Login Gagal:", error);
         }
     };
-    
+
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
         router.push("/dashboard/overview");

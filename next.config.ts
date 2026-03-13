@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 1. Pengaturan agar popup Google Login tidak diblokir
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async headers() {
     return [
       {
@@ -13,14 +18,6 @@ const nextConfig = {
         ],
       },
     ];
-  },
-
-  // 2. Pengaturan agar tetap bisa deploy meski ada error kecil (Jurus Hackathon)
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
 };
 
